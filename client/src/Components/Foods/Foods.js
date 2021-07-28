@@ -6,9 +6,15 @@ import Food from "./Food/Food";
 import makeAnimated from "react-select/animated";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./Foods.css";
+let timer;
 const animatedComponents = makeAnimated();
 const foods = (props) => {
+  const selectInputRef1 = useRef();
+  const selectInputRef2 = useRef();
+  const selectInputRef3 = useRef();
+  const searchref = useRef();
   const firstUpdate = useRef(true);
+  const [value, setValue] = useState("one");
   const [load, setload] = useState(true);
   const [food, setfood] = useState([]);
   const [ailment, setailment] = useState([]);
@@ -104,43 +110,87 @@ const foods = (props) => {
     setfilter({ ...filter, other: otherId });
   };
 
+  const handleChange = () => {
+    selectInputRef1.current.select.clearValue();
+    selectInputRef2.current.select.clearValue();
+    selectInputRef3.current.select.clearValue();
+    searchref.current.value = "";
+    setfilter({ ailment: [], specific: [], other: [] });
+  };
+
+  let filterList = (event) => {
+    clearTimeout(timer);
+    let search = event.target.value;
+    timer = setTimeout(() => {
+      setload(true);
+      axios
+        .post(
+          "http://localhost:2020/get-food-filter?search=" + search,
+          { filter },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setfood(res.data.food);
+          setload(false);
+        })
+        .catch((error) => {
+          setload(false);
+        });
+    }, 500);
+  };
   return (
     <React.Fragment>
       {load ? <Spinner /> : ""}
-      <div className="filter">
-        <div style={{ width: "100%" }}>
-          <Select
-            placeholder="Filter by Ailment"
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            //defaultValue={[...this.props.state.selectedCat]}
-            isMulti
-            options={ailment}
-            onChange={ailmentSelector}
+      <div className="inputwrapper">
+        <div className="filter ">
+          <input
+            type="text"
+            id="search"
+            className="form-control form-control-sm search"
+            placeholder="Search"
+            ref={searchref}
+            onChange={filterList}
           />
+          <div style={{ width: "100%" }}>
+            <Select
+              ref={selectInputRef1}
+              placeholder="Filter by Ailment"
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={ailment}
+              onChange={ailmentSelector}
+            />
+          </div>
+          <div style={{ width: "100%" }}>
+            <Select
+              ref={selectInputRef2}
+              placeholder="Filter by Content"
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={specific}
+              onChange={specificSelector}
+            />
+          </div>
+          <div style={{ width: "100%" }}>
+            <Select
+              ref={selectInputRef3}
+              placeholder="Other filters"
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={other}
+              onChange={otherSelector}
+            />
+          </div>
+          <button onClick={handleChange} className="btn btn-danger">
+            CLEAR
+          </button>
         </div>
-        <div style={{ width: "100%" }}>
-          <Select
-            placeholder="Filter by Content"
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            //defaultValue={[...this.props.state.selectedCat]}
-            isMulti
-            options={specific}
-            onChange={specificSelector}
-          />
-        </div>
-        <div style={{ width: "100%" }}>
-          <Select
-            placeholder="Other filters"
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            options={other}
-            onChange={otherSelector}
-          />
-        </div>
-        <button className="btn btn-danger">CLEAR</button>
       </div>
       <div className="row m-0">
         {food.length ? (

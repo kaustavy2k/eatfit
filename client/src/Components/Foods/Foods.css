@@ -106,3 +106,13 @@
   z-index: 100;
   display: flex;
 }
+.inputwrapper{
+  position: relative;
+}
+.search{
+  width: 30%;
+  position: absolute;
+  left: 32%;
+  z-index: 200;
+  top: -60px;
+}

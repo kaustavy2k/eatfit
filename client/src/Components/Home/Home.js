@@ -3,7 +3,7 @@ import Nav from "../Nav/Nav";
 import axios from "axios";
 import Spinner from "../Spinner/spinner";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Facilities from "../Facilities/Foods";
+import Foods from "../Foods/Foods";
 import Profile from "..//Profile/Profile";
 import Header from "../Header/Header";
 
@@ -49,7 +49,7 @@ class Home extends Component {
               render={(props) => (
                 <div>
                   <Header name={this.state.name} />
-                  <Facilities />
+                  <Foods />
                 </div>
               )}
             />

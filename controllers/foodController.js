@@ -102,7 +102,8 @@ exports.getFoodFilter = async (req, res) => {
     if (
       filter.ailment.length == 0 &&
       filter.specific.length == 0 &&
-      filter.other.length == 0
+      filter.other.length == 0 &&
+      !req.query.search
     ) {
       const foods = await food.find({});
       if (foods.length != 0) {
@@ -143,7 +144,7 @@ exports.getFoodFilter = async (req, res) => {
       lowcontent = lowcontentnew;
     }
     // console.log(ailment, highcontent, lowcontent, other);
-    const foods = await food.find({
+    let foods = await food.find({
       ailment: {
         $in: [...ailment],
       },
@@ -159,7 +160,14 @@ exports.getFoodFilter = async (req, res) => {
         $in: [...other],
       },
     });
-    // console.log(foods);
+    //console.log(foods);
+    if (req.query.search) {
+      foods = foods.filter(function (item) {
+        return (
+          item.name.toLowerCase().search(req.query.search.toLowerCase()) !== -1
+        );
+      });
+    }
     if (foods.length != 0) {
       res.status(200).json({
         message: "your food",
