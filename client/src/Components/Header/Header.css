@@ -1,0 +1,25 @@
+.Header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #222;
+    height: 88px;
+    color: white;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+  h3{
+      margin-top: 6px;
+      font-size: 18px;
+  }
+
+.item{
+    margin: 10px;
+    color:wheat;
+    transition: all .1s;
+}
+.item:hover{
+    text-decoration: none;
+    color:wheat;
+}

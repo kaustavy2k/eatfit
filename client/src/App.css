@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+* {
+  box-sizing: border-box;
+}
+.login_page {
+  background:url(./images/c31216424b811a9770b5b7dacb06fa3e.jpg) no-repeat center fixed;
+  background-size: cover;
+  font-family: "Fira Sans", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span {
+  font-weight: 500;
+  font-family: "Fira Sans", sans-serif;
+}
+
+
+#root,
+.auth-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.navbar-light{
+  background-color: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34,35,58,0.2)
+}
+.auth-wrapper{
+  margin-top: 120px;
+  display: flex;
+  justify-content:center;
+  flex-direction: column;
+  text-align: left;
+}
+.auth-inner{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin:auto;
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34,35,58,0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+.auth-wrapper h3{
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+.auth-inner h2{
+  font-size: 20px;
+  font-weight: 700;
+}
+.custom-control-label{
+  font-weight: 400;
+}
+.forgot-password, .forgot-password a{
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin:0
+}
+.forgot-password a{
+  color: #167bff
+}
