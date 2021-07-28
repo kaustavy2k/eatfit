@@ -1,6 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 const food = (props) => {
+  //console.log(props.count,props.cost, props.items);
   return (
     <div className="col-lg-3 col-md-6 col-sm-6 ">
       <div className="boxDiv">
@@ -16,10 +19,69 @@ const food = (props) => {
               Carbohydrates(mg)- {props.info.carbohydrates} , Fat(mg)-
               {props.info.fat}
             </li>
+            <li className="list-group-item">Cost- Rs {props.info.cost}</li>
+            <li className="list-group-item">
+              Quantity-{" "}
+              {props.items[props.info.name] ? props.items[props.info.name] : 0}
+            </li>
           </ul>
+          <div className="buttons">
+            <button
+              disabled={!props.items[props.info.name]}
+              onClick={props.decrement.bind(
+                null,
+                props.info.name,
+                props.info.cost
+              )}
+              className="btn btn-danger"
+            >
+              -
+            </button>
+            <button
+              disabled={props.items[props.info.name] > 0}
+              onClick={props.increment.bind(
+                null,
+                props.info.name,
+                props.info.cost
+              )}
+            >
+              {props.items[props.info.name] > 0 ? (
+                <Link className="btn btn-primary" to="/cart">
+                  GO TO CART
+                </Link>
+              ) : (
+                <div className="btn btn-primary">ADD TO CART</div>
+              )}
+            </button>
+            <button
+              disabled={!props.items[props.info.name]}
+              onClick={props.increment.bind(
+                null,
+                props.info.name,
+                props.info.cost
+              )}
+              className="btn btn-danger"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-export default food;
+
+const mapstatetoprops = (state) => {
+  return {
+    count: state.count,
+    items: state.items,
+    cost: state.cost,
+  };
+};
+const mapdispatchtoprops = (dispatch) => {
+  return {
+    increment: (name, cost) => dispatch({ type: "INCREMENT", name, cost }),
+    decrement: (name, cost) => dispatch({ type: "DECREMENT", name, cost }),
+  };
+};
+export default connect(mapstatetoprops, mapdispatchtoprops)(food);

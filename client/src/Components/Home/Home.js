@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Foods from "../Foods/Foods";
 import Profile from "..//Profile/Profile";
 import Header from "../Header/Header";
-
+import Cart from "../Cart/cart"
 class Home extends Component {
   state = {
     login: false,
@@ -59,6 +59,15 @@ class Home extends Component {
               render={(props) => (
                 <div>
                   <Profile isLogin={this.state.login} name={this.state.name} />
+                </div>
+              )}
+            />
+             <Route
+              exact
+              path="/cart"
+              render={(props) => (
+                <div>
+                  <Cart isLogin={this.state.login} name={this.state.name} />
                 </div>
               )}
             />

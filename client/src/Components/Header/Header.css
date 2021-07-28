@@ -18,8 +18,26 @@
     margin: 10px;
     color:wheat;
     transition: all .1s;
+    position: relative;
 }
 .item:hover{
     text-decoration: none;
-    color:wheat;
+    color:rgb(116, 86, 30);
 }
+.headerOp{
+    margin-left: 200px;
+}
+.closediv {
+    display: inline-block;
+    position: absolute;
+    top: -15px;
+    left: 27px;
+    font-weight: bolder;
+    font-size: 15px;
+    color: black;
+    border-radius: 100px;
+    background-color: rgb(243, 235, 220);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+  }

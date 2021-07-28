@@ -7,6 +7,7 @@ import SignUp from "./Components/Signup/SignUp";
 import Error from "./Components/Error/error"
 import Profile from "./Components/Profile/Profile"
 import Forgot from "./Components/Forgot/Forgot"
+import Cart from "./Components/Cart/cart"
 import "./App.css";
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/cart" component={Cart} />
             <Route exact path="/forgot" component={Forgot} />
             <Route component={Error} />
           </Switch>

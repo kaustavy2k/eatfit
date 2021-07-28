@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   specificity:String,
   highcontent:String,
   lowcontent:String,
+  cost:String,
 });
 const food = mongoose.model("foods", userSchema);
 module.exports = food;

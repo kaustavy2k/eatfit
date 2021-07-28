@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./Header.css";
 import { Link } from "react-router-dom";
 const header = (props) => {
@@ -8,7 +9,13 @@ const header = (props) => {
       <h3>Hi {props.name}!</h3>
       <div className="headerOp">
         <Link className="item" to="/">
-          Booking
+          Food
+        </Link>
+        <Link className="item" to="/cart">
+          Cart
+          <span className="closediv">
+            {props.count}
+          </span>
         </Link>
         <Link className="item" to="/profile">
           Profile
@@ -17,4 +24,10 @@ const header = (props) => {
     </header>
   );
 };
-export default header;
+
+const mapstatetoprops = (state) => {
+  return {
+    count: state.count,
+  };
+};
+export default connect(mapstatetoprops, null)(header);
