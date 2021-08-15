@@ -22,8 +22,8 @@ router
   .delete(authController.protect, userContoller.deleteMe);
 
 
-router.route("/payment").post( orderController.payment);
-router.route("/get-order").get( orderController.getOrder);
+router.route("/payment").post( authController.protect,orderController.payment);
+router.route("/get-order").get( authController.protect,orderController.getOrder);
 
 router.route("/get-food").get(authController.protect, foodController.getFood);
 router.route("/get-food-all").get(authController.protect, foodController.getFoodAll);

@@ -36,7 +36,7 @@ exports.payment = async (req, res) => {
     );
     let f = {};
     final.forEach((i) => {
-      f[i.item] = i.quantity;
+      f[i.item] = i.quantity+" x "+i.cost+" - "+i.quantity*i.cost;
     });
     data = {
       emailid: token.email,
@@ -58,8 +58,8 @@ exports.payment = async (req, res) => {
 
 exports.getOrder = async (req, res) => {
     try {
-      const order = await orders.find({emailid:req.body.email});
-      if (order.length != 0) {
+      const order = await orders.find({emailid:req.user.email});
+      if (order.length !== 0) {
         res.status(200).json({
           message: "your food",
           food: order,

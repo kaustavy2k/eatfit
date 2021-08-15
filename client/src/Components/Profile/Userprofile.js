@@ -104,7 +104,7 @@ class Userprofile extends Component {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data.food)
         this.setState({
           loader: false,
           orders: res.data.food,
@@ -112,10 +112,18 @@ class Userprofile extends Component {
         });
       })
       .catch((err) => {
+        console.log(err)
+
         this.setState({ loader: false });
         alert("Error. Try again later");
       });
   };
+  getfood=(food)=>{
+    let f=Object.keys(food).map((key,i)=>{
+      return ` ${key} ${food[key]},`
+    })
+    return f
+  }
   render() {
     let popup1, popup2, popup3, displaybook;
     if (this.state.msg) {
@@ -134,7 +142,7 @@ class Userprofile extends Component {
             return (
               <div className="orderitems" key={index}>
                 <h3>
-                  {index + 1}. {obj.food} {obj.quantity} {obj.price}
+                  {index + 1}.  {this.getfood(obj.food)} Total= {obj.price}
                 </h3>
               </div>
             );
