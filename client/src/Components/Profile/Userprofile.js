@@ -140,7 +140,7 @@ class Userprofile extends Component {
             );
           })}
         </div>
-      );
+      )
     }
     let load = this.state.loader;
     return (
