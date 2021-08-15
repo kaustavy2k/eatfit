@@ -34,7 +34,7 @@ class Home extends Component {
           <Nav />
           <div className="auth-wrapper">
             <div className="auth-inner">
-              <h2>Welcome to Car Rentals!</h2>
+              <h2>Welcome to Eat Fit!</h2>
             </div>
           </div>
         </div>

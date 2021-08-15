@@ -10,7 +10,7 @@ class Userprofile extends Component {
     show: false,
     loader: false,
     msg: {},
-    bookings: [],
+    orders: [],
     bookedmsg: "",
   };
   logout = () => {
@@ -97,41 +97,19 @@ class Userprofile extends Component {
         this.setState({ loader: false, msg: { ...temp } });
       });
   };
-  showbooking = () => {
-    this.setState({ loader: true });
+  showorder = () => {
+    //this.setState({ loader: true });
     axios
-      .get("http://localhost:2020/show", {
+      .get("http://localhost:2020/get-order", {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res.data)
         this.setState({
           loader: false,
-          bookings: res.data.bookings,
+          orders: res.data.food,
           bookedmsg: res.data.bookedmsg,
         });
-      })
-      .catch((err) => {
-        this.setState({ loader: false });
-        alert("Error. Try again later");
-      });
-  };
-  deletebooking = (id) => {
-    this.setState({ loader: true });
-    axios
-      .post(
-        "http://localhost:2020/deleteBook",
-        { _id: id },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        this.setState({
-          loader: false,
-          bookings: res.data.bookings,
-          bookedmsg: res.data.bookedmsg,
-        });
-        alert("Booking Deleted!");
       })
       .catch((err) => {
         this.setState({ loader: false });
@@ -147,23 +125,17 @@ class Userprofile extends Component {
         <h5 className="display-error">{this.state.msg.passwordConfirm}</h5>
       );
     }
-    if (this.state.bookings.length === 0) {
+    if (this.state.orders.length === 0) {
       displaybook = <h5>{this.state.bookedmsg}</h5>;
     } else {
       displaybook = (
-        <div className="bookingsdiv">
-          {this.state.bookings.map((obj, index) => {
+        <div className="ordersdiv">
+          {this.state.orders.map((obj, index) => {
             return (
-              <div className="bookingitems" key={index}>
+              <div className="orderitems" key={index}>
                 <h3>
-                  {index + 1}. {obj.name} {obj.type} {obj.time}
+                  {index + 1}. {obj.food} {obj.quantity} {obj.price}
                 </h3>
-                <button
-                  className="btn btn-dark"
-                  onClick={this.deletebooking.bind(this, obj._id)}
-                >
-                  DELETE
-                </button>
               </div>
             );
           })}
@@ -175,10 +147,10 @@ class Userprofile extends Component {
       <div className="container profile-container">
         <br></br>
         <div className="card">
-          <h5 className="card-header">Show Current Bookings</h5>
+          <h5 className="card-header">Show My Orders</h5>
           <div className="card-body">
             {displaybook}
-            <button className="btn btn-primary" onClick={this.showbooking}>
+            <button className="btn btn-primary" onClick={this.showorder}>
               Show
             </button>
           </div>

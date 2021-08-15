@@ -4,6 +4,7 @@ const authController = require("../controllers/authController");
 const userContoller = require("../controllers/userController");
 const foodController = require("../controllers/foodController");
 const ailmentController = require("../controllers/ailmentController");
+const orderController = require("../controllers/orderController")
 const router = express.Router();
 router
   .route("/main")
@@ -21,6 +22,8 @@ router
   .delete(authController.protect, userContoller.deleteMe);
 
 
+router.route("/payment").post( orderController.payment);
+router.route("/get-order").get( orderController.getOrder);
 
 router.route("/get-food").get(authController.protect, foodController.getFood);
 router.route("/get-food-all").get(authController.protect, foodController.getFoodAll);

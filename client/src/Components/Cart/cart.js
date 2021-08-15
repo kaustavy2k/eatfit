@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Spinner from "../Spinner/spinner";
 import Header from "../Header/Header";
+import StripeCheckout from "react-stripe-checkout";
+import { Redirect, withRouter } from "react-router-dom";
 import "./cart.css";
+
 let total = 0;
 class Cart extends Component {
   state = {
@@ -14,13 +17,19 @@ class Cart extends Component {
     msg: {},
     bookings: [],
     bookedmsg: "",
+    email: "",
   };
   componentDidMount() {
     this.setState({ loading: true });
     axios
       .get("http://localhost:2020/main", { withCredentials: true })
       .then((res) => {
-        this.setState({ login: true, loading: false, name: res.data.name });
+        this.setState({
+          login: true,
+          loading: false,
+          name: res.data.name,
+          email: res.data.email,
+        });
       })
       .catch((res) => {
         this.setState({ login: false, loading: false });
@@ -41,6 +50,24 @@ class Cart extends Component {
       }
     }
     return final;
+  };
+  payment = async (token) => {
+    let final = this.getitems();
+    try {
+      this.setState({ loading: true });
+      const response = await axios.post("http://localhost:2020/payment", {
+        token,
+        final,
+        total,
+      });
+      this.setState({ loading: false });
+      window.alert("Payment Successful! Food on the way!");
+      this.props.reset();
+    } catch (err) {
+      console.log(err);
+      this.setState({ loading: false });
+      window.alert("Payment failed! Server Error");
+    }
   };
   render() {
     let load = this.state.loading;
@@ -71,42 +98,21 @@ class Cart extends Component {
             </div>
           </div>
           <br></br>
-          <div className="card">
-            <h5 className="card-header">Change Name and Email</h5>
-            <div className="card-body">
-              <form>
-                <div b="form-group">
-                  <label>New Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="formGroupExampleInput"
-                    placeholder="New Name"
-                    ref={(inputEl) => {
-                      this.firstname = inputEl;
-                    }}
-                    onChange={(e) => (this.newname = e.target.value)}
-                  ></input>
-                </div>
-                <div className="form-group">
-                  <label>New Email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="formGroupExampleInput2"
-                    placeholder="New Email"
-                    ref={(inputEl) => {
-                      this.secondname = inputEl;
-                    }}
-                    onChange={(e) => (this.newemail = e.target.value)}
-                  ></input>
-                </div>
-              </form>
-              <button className="btn btn-primary" onClick={this.updateme}>
-                Submit
-              </button>
-            </div>
-          </div>
+          <StripeCheckout
+            stripeKey="pk_test_51JISvASGTGDeZiN2L6dVpSBtCCkfDMDwuR4WwUyLmDRksGsR2eRIraXliSHHKbtDyAlU89yVuxYmEKGGJOd1mZKk00YlteVhG5"
+            token={this.payment}
+            name={this.state.name}
+            email={this.state.email}
+          >
+            <button
+              style={{ width: "100%" }}
+              disabled={!total}
+              className="btn btn-danger"
+            >
+              PAY TOTAL={total}
+            </button>
+          </StripeCheckout>
+
           <br></br>
         </div>
       </React.Fragment>
@@ -120,4 +126,9 @@ const mapstatetoprops = (state) => {
     cost: state.cost,
   };
 };
-export default connect(mapstatetoprops, null)(Cart);
+const mapdispatchtoprops = (dispatch) => {
+  return {
+    reset: () => dispatch({ type: "RESET" }),
+  };
+};
+export default connect(mapstatetoprops, mapdispatchtoprops)(Cart);

@@ -10,10 +10,10 @@ const reducer = (state = initilstate, action) => {
     let newcost = { ...state.cost };
     if (newitems[action.name]) {
       newitems[action.name] += 1;
-      newcost[action.name] += 1*action.cost;
+      newcost[action.name] += 1 * action.cost;
     } else {
       newitems[action.name] = 1;
-      newcost[action.name] = 1*action.cost;
+      newcost[action.name] = 1 * action.cost;
     }
     return {
       count,
@@ -26,11 +26,18 @@ const reducer = (state = initilstate, action) => {
     let newitems = { ...state.items };
     let newcost = { ...state.cost };
     newitems[action.name] -= 1;
-    newcost[action.name] -= 1*action.cost;
+    newcost[action.name] -= 1 * action.cost;
     return {
       count,
       items: { ...newitems },
       cost: { ...newcost },
+    };
+  }
+  if (action.type === "RESET") {
+    return {
+      count: 0,
+      items: {},
+      cost: {},
     };
   }
   return state;
