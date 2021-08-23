@@ -21,7 +21,7 @@ class SignUp extends Component {
       password: this.password,
     };
     axios
-      .post("http://localhost:2020/login", data, {
+      .post(`${process.env.REACT_APP_API_URL}/login`, data, {
         withCredentials: true,
       })
       .then((res) => {

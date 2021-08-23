@@ -42,13 +42,13 @@ const foods = (props) => {
   useEffect(() => {
     setload(true);
     axios
-      .get("http://localhost:2020/get-food-all", {
+      .get(`${process.env.REACT_APP_API_URL}/get-food-all`, {
         withCredentials: true,
       })
       .then((res) => {
         setfood(res.data.food);
         // console.log(res.data);
-        return axios.get("http://localhost:2020/get-ailment-all", {
+        return axios.get(`${process.env.REACT_APP_API_URL}/get-ailment-all`, {
           withCredentials: true,
         });
       })
@@ -72,7 +72,7 @@ const foods = (props) => {
     setload(true);
     axios
       .post(
-        "http://localhost:2020/get-food-filter",
+        `${process.env.REACT_APP_API_URL}/get-food-filter`,
         { filter },
         {
           withCredentials: true,
@@ -125,7 +125,7 @@ const foods = (props) => {
       setload(true);
       axios
         .post(
-          "http://localhost:2020/get-food-filter?search=" + search,
+          `${process.env.REACT_APP_API_URL}/get-food-filter?search=${search}`,
           { filter },
           {
             withCredentials: true,

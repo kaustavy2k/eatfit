@@ -22,7 +22,7 @@ class Cart extends Component {
   componentDidMount() {
     this.setState({ loading: true });
     axios
-      .get("http://localhost:2020/main", { withCredentials: true })
+      .get(`${process.env.REACT_APP_API_URL}/main`, { withCredentials: true })
       .then((res) => {
         this.setState({
           login: true,
@@ -55,7 +55,7 @@ class Cart extends Component {
     let final = this.getitems();
     try {
       this.setState({ loading: true });
-      const response = await axios.post("http://localhost:2020/payment", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/payment`, {
         token,
         final,
         total,

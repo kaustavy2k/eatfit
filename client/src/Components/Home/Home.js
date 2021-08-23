@@ -15,7 +15,7 @@ class Home extends Component {
   };
   componentDidMount() {
     axios
-      .get("http://localhost:2020/main", {
+      .get(`${process.env.REACT_APP_API_URL}/main`, {
         withCredentials: true,
       })
       .then((res) => {

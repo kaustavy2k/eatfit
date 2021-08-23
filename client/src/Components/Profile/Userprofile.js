@@ -13,9 +13,21 @@ class Userprofile extends Component {
     orders: [],
     bookedmsg: "",
   };
+  componentDidMount() {
+    const s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    s.innerHTML = `var sub = "a9d73266-0ccc-d378-9682-5437c9a2f0c2";
+  var weavy = new Weavy({ jwt: sub });
+  var viewA = weavy.space({
+    key: "f5caaaf8-2474-48ed-9299-426a6ab9fc7b",
+  });
+  viewA.app({ key: "feed", type: "posts", container: "#feed" });`;
+    document.body.appendChild(s);
+  }
   logout = () => {
     axios
-      .get("http://localhost:2020/logout", { withCredentials: true })
+      .get(`${process.env.REACT_APP_API_URL}/logout`, { withCredentials: true })
       .then((res) => {
         window.location.reload();
       })
@@ -33,7 +45,7 @@ class Userprofile extends Component {
   };
   delete = () => {
     axios
-      .delete("http://localhost:2020/deleteMe", { withCredentials: true })
+      .delete(`${process.env.REACT_APP_API_URL}/deleteMe`, { withCredentials: true })
       .then((res) => {
         window.location.reload();
       })
@@ -52,7 +64,7 @@ class Userprofile extends Component {
     };
 
     axios
-      .patch("http://localhost:2020/updateMe", data, { withCredentials: true })
+      .patch(`${process.env.REACT_APP_API_URL}/updateMe`, data, { withCredentials: true })
       .then((res) => {
         this.setState({ loader: false });
         alert("Name Successfully Changed!");
@@ -76,7 +88,7 @@ class Userprofile extends Component {
       passwordConfirm: this.cpass,
     };
     axios
-      .patch("http://localhost:2020/updateMyPassword", data, {
+      .patch(`${process.env.REACT_APP_API_URL}/updateMyPassword`, data, {
         withCredentials: true,
       })
       .then((res) => {
@@ -98,13 +110,13 @@ class Userprofile extends Component {
       });
   };
   showorder = () => {
-    //this.setState({ loader: true });
+    this.setState({ loader: true });
     axios
-      .get("http://localhost:2020/get-order", {
+      .get(`${process.env.REACT_APP_API_URL}/get-order`, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.food)
+        console.log(res.data.food);
         this.setState({
           loader: false,
           orders: res.data.food,
@@ -112,18 +124,17 @@ class Userprofile extends Component {
         });
       })
       .catch((err) => {
-        console.log(err)
-
+        console.log(err);
         this.setState({ loader: false });
         alert("Error. Try again later");
       });
   };
-  getfood=(food)=>{
-    let f=Object.keys(food).map((key,i)=>{
-      return ` ${key} ${food[key]},`
-    })
-    return f
-  }
+  getfood = (food) => {
+    let f = Object.keys(food).map((key, i) => {
+      return ` ${key} ${food[key]},`;
+    });
+    return f;
+  };
   render() {
     let popup1, popup2, popup3, displaybook;
     if (this.state.msg) {
@@ -142,13 +153,13 @@ class Userprofile extends Component {
             return (
               <div className="orderitems" key={index}>
                 <h3>
-                  {index + 1}.  {this.getfood(obj.food)} Total= {obj.price}
+                  {index + 1}. {this.getfood(obj.food)} Total= {obj.price}
                 </h3>
               </div>
             );
           })}
         </div>
-      )
+      );
     }
     let load = this.state.loader;
     return (
@@ -162,6 +173,11 @@ class Userprofile extends Component {
               Show
             </button>
           </div>
+        </div>
+        <br></br>
+        <div className="card">
+          <h5 className="card-header">Write a Review</h5>
+          <div className="feed" id="feed"></div>
         </div>
         <br></br>
         <div className="card">

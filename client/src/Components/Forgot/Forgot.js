@@ -24,7 +24,7 @@ class SignUp extends Component {
       passwordConfirm: this.cpass,
     };
     axios
-      .patch(`http://localhost:2020/resetPassword/${this.token}`, data, {
+      .patch(`${process.env.REACT_APP_API_URL}/resetPassword/${this.token}`, data, {
         withCredentials: true,
       })
       .then((res) => {
@@ -64,7 +64,7 @@ class SignUp extends Component {
     };
     this.cemail.value = "";
     axios
-      .post("http://localhost:2020/forgotPassword", data, {
+      .post(`${process.env.REACT_APP_API_URL}/forgotPassword`, data, {
         withCredentials: true,
       })
       .then((res) => {

@@ -1,22 +1,22 @@
 {
-  "name": "facility-booking",
+  "name": "eat-fit",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaustavy2k/facility-booking.git"
+    "url": "git+https://github.com/kaustavy2k/eatfit.git"
   },
   "keywords": [],
   "author": "Kaustav Basak",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kaustavy2k/facility-booking/issues"
+    "url": "https://github.com/kaustavy2k/eatfit/issues"
   },
-  "homepage": "https://github.com/kaustavy2k/facility-booking#readme",
+  "homepage": "https://github.com/kaustavy2k/eatfit#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",

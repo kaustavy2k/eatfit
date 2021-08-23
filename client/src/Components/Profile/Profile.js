@@ -13,7 +13,7 @@ class Profile extends Component {
   componentDidMount() {
     if (!this.props.isLogin) {
       axios
-        .get("http://localhost:2020/main", { withCredentials: true })
+        .get(`${process.env.REACT_APP_API_URL}/main`, { withCredentials: true })
         .then((res) => {
           this.setState({ login: true, loading: false, name: res.data.name });
         })

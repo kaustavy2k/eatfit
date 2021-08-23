@@ -34,7 +34,7 @@ class SignUp extends Component {
       passwordConfirm: this.cpassword,
     };
     axios
-      .post("http://localhost:2020/signup", data, {
+      .post(`${process.env.REACT_APP_API_URL}/signup`, data, {
         withCredentials: true,
       })
       .then((res) => {
