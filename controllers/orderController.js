@@ -3,7 +3,7 @@ const orders = require("../models/order");
 const stripe = require("stripe")(
   "sk_test_51JISvASGTGDeZiN2lrEjvnv8Y8z8dzVYgAvqypudsuORQdIUVZvDkA05VMR9aU35jw5lDQUVzMVRSsEr24MzkmnH00VR1nMvcf"
 );
-const uuid = require("uuid/v4");
+const {v4:uuidv4}=require('uuid')
 exports.payment = async (req, res) => {
   try {
     const { final, token, total } = req.body;
@@ -11,7 +11,7 @@ exports.payment = async (req, res) => {
       email: token.email,
       source: token.id,
     });
-    const idempotencyKey = uuid();
+    const idempotencyKey = uuidv4();
     const charge = await stripe.charges.create(
       {
         amount: total * 84,
