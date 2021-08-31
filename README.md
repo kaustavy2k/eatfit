@@ -21,3 +21,6 @@ There are two package.json files, one for frontend and one for backend. So open 
 type the command "npm install" then "npm start"
 Now, move inside the "client" folder by typing "cd client". There is an .env file inside "client" folder. Open that and change the url to "http://localhost:2020"
 type the command "npm install" then "npm start". And you are good to go
+
+
+PS- you can signup or use my credentials to login: email:- kb@gmail.com password:-qqqqqq
